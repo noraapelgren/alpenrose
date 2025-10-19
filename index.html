@@ -27,11 +27,11 @@
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul class="footer-links">
-                        <li><a href="#about" onclick="showPage('about')">About Us</a></li>
-                        <li><a href="#accommodations" onclick="showPage('accommodations')">Accommodations</a></li>
-                        <li><a href="#spa" onclick="showPage('spa')">Spa & Wellness</a></li>
-                        <li><a href="#booking" onclick="showPage('booking')">Book Now</a></li>
-                        <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
+                        <li><a href="#about" onclick="showPage('about'); return false;">About Us</a></li>
+                        <li><a href="#accommodations" onclick="showPage('accommodations'); return false;">Accommodations</a></li>
+                        <li><a href="#spa" onclick="showPage('spa'); return false;">Spa & Wellness</a></li>
+                        <li><a href="#booking" onclick="showPage('booking'); return false;">Book Now</a></li>
+                        <li><a href="#contact" onclick="showPage('contact'); return false;">Contact</a></li>
                     </ul>
                 </div>
                 
@@ -872,60 +872,60 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>The Alpenrose</h4>
-                <p>Experience the pinnacle of Swiss Alpine luxury at our exclusive mountain resort and spa.</p>
-                <p style="margin-top: 20px;">123 Alpenweg<br>3920 Zermatt<br>Switzerland</p>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="#about" onclick="showPage('about')">About Us</a></li>
-                    <li><a href="#accommodations" onclick="showPage('accommodations')">Accommodations</a></li>
-                    <li><a href="#spa" onclick="showPage('spa')">Spa & Wellness</a></li>
-                    <li><a href="#booking" onclick="showPage('booking')">Book Now</a></li>
-                    <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Guest Services</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Concierge</a></li>
-                    <li><a href="#">Room Service</a></li>
-                    <li><a href="#">Ski Equipment Rental</a></li>
-                    <li><a href="#">Airport Transfers</a></li>
-                    <li><a href="#">Gift Certificates</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Contact Us</h4>
-                <p>Phone: +41 27 123 45 67</p>
-                <p>Email: hello@reallygreatsite.com</p>
-                <p style="margin-top: 20px;">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 12:00 PM</p>
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook">f</a>
-                    <a href="#" aria-label="Instagram">📷</a>
-                    <a href="#" aria-label="Twitter">𝕏</a>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>The Alpenrose</h4>
+                    <p>Experience the pinnacle of Swiss Alpine luxury at our exclusive mountain resort and spa.</p>
+                    <p style="margin-top: 20px;">123 Alpenweg<br>3920 Zermatt<br>Switzerland</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#accommodations" onclick="showPage('accommodations')">Accommodations</a></li>
+                        <li><a href="#spa" onclick="showPage('spa')">Spa & Wellness</a></li>
+                        <li><a href="#booking" onclick="showPage('booking')">Book Now</a></li>
+                        <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Guest Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Concierge</a></li>
+                        <li><a href="#">Room Service</a></li>
+                        <li><a href="#">Ski Equipment Rental</a></li>
+                        <li><a href="#">Airport Transfers</a></li>
+                        <li><a href="#">Gift Certificates</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>Phone: +41 27 123 45 67</p>
+                    <p>Email: hello@reallygreatsite.com</p>
+                    <p style="margin-top: 20px;">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 12:00 PM</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">f</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="Twitter">𝕏</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 The Alpenrose Mountain Resort & Spa. All rights reserved.</p>
-            <p style="margin-top: 10px;">
-                <a href="#">Privacy Policy</a> | 
-                <a href="#">Terms & Conditions</a> | 
-                <a href="#">Sitemap</a>
-            </p>
-        </div>
-    </footer>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Alpenrose Mountain Resort & Spa. All rights reserved.</p>
+                <p style="margin-top: 10px;">
+                    <a href="#">Privacy Policy</a> | 
+                    <a href="#">Terms & Conditions</a> | 
+                    <a href="#">Sitemap</a>
+                </p>
+            </div>
+        </footer>
+    </div>
 
     <script>
         let bookingData = {
@@ -1199,10 +1199,18 @@
         });
 
         function showPage(pageId) {
+            // Prevent default link behavior
+            if (event) {
+                event.preventDefault();
+            }
+            
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
             
-            document.getElementById(pageId).classList.add('active');
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
             
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => link.classList.remove('active'));
@@ -1222,6 +1230,13 @@
             
             window.scrollTo(0, 0);
         }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            // Make sure home page is active on load
+            showPage('home');
+            handleScrollAnimations();
+        });
 
         function resetBooking() {
             bookingData = {
@@ -2789,13 +2804,13 @@
             
             <div class="nav-main">
                 <ul>
-                    <li><a href="#home" class="nav-link active" onclick="showPage('home')">Home</a></li>
-                    <li><a href="#about" class="nav-link" onclick="showPage('about')">About</a></li>
-                    <li><a href="#accommodations" class="nav-link" onclick="showPage('accommodations')">Accommodations</a></li>
-                    <li><a href="#suite" class="nav-link" onclick="showPage('suite')">The Grand Penthouse</a></li>
-                    <li><a href="#spa" class="nav-link" onclick="showPage('spa')">Spa & Wellness</a></li>
-                    <li><a href="#booking" class="nav-link" onclick="showPage('booking')">Book Now</a></li>
-                    <li><a href="#contact" class="nav-link" onclick="showPage('contact')">Contact Us</a></li>
+                    <li><a href="#home" class="nav-link active" onclick="showPage('home'); return false;">Home</a></li>
+                    <li><a href="#about" class="nav-link" onclick="showPage('about'); return false;">About</a></li>
+                    <li><a href="#accommodations" class="nav-link" onclick="showPage('accommodations'); return false;">Accommodations</a></li>
+                    <li><a href="#suite" class="nav-link" onclick="showPage('suite'); return false;">The Grand Penthouse</a></li>
+                    <li><a href="#spa" class="nav-link" onclick="showPage('spa'); return false;">Spa & Wellness</a></li>
+                    <li><a href="#booking" class="nav-link" onclick="showPage('booking'); return false;">Book Now</a></li>
+                    <li><a href="#contact" class="nav-link" onclick="showPage('contact'); return false;">Contact Us</a></li>
                 </ul>
             </div>
             
@@ -2807,7 +2822,7 @@
     <div id="home" class="page active">
         <section class="home-hero">
             <img src="images/logo-white.png" alt="The Alpenrose" class="home-logo">
-            <a href="#booking" class="learn-more-btn" onclick="showPage('booking')">Book Now</a>
+            <a href="#booking" class="learn-more-btn" onclick="showPage('booking'); return false;">Book Now</a>
         </section>
 
         <section class="home-tagline">
