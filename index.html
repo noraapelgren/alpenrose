@@ -918,9 +918,7 @@
             });
             event.target.classList.add('selected');
             
-            // Update all prices on the page
-            updateAllPrices();
-            
+            // In a real app, this would update all prices
             console.log('Currency changed to:', currency);
         }
 
@@ -941,18 +939,12 @@
             
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => link.classList.remove('active'));
-            
-            // Find the clicked link and make it active
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === '#' + pageId) {
-                    link.classList.add('active');
-                }
-            });
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             if (pageId === 'booking') {
-                setTimeout(() => {
-                    nextStep(1);
-                }, 100);
+                nextStep(1);
             }
             
             window.scrollTo(0, 0);
@@ -1068,12 +1060,8 @@
             
             event.currentTarget.classList.add('selected');
             
-            // Convert base price to current currency
-            const basePrice = price;
-            const convertedPrice = convertPrice(basePrice);
-            
             bookingData.room = roomType;
-            bookingData.roomPrice = convertedPrice;
+            bookingData.roomPrice = price;
             bookingData.roomName = event.currentTarget.querySelector('h4').textContent;
         }
 
@@ -1084,14 +1072,11 @@
             
             const addonName = element.querySelector('h5').textContent;
             
-            // Convert base price to current currency
-            const convertedPrice = convertPrice(price);
-            
             if (checkbox.checked) {
                 bookingData.addons.push({
                     type: addonType,
                     name: addonName,
-                    price: convertedPrice
+                    price: price
                 });
             } else {
                 bookingData.addons = bookingData.addons.filter(a => a.type !== addonType);
@@ -1324,15 +1309,10 @@
         .page {
             display: none;
             animation: fadeIn 0.5s ease-in;
-            padding-top: 80px;
         }
 
         .page.active {
             display: block;
-        }
-
-        .page#home {
-            padding-top: 0;
         }
 
         @keyframes fadeIn {
@@ -2334,8 +2314,6 @@
             color: rgba(255, 255, 255, 0.8);
             padding: 60px 20px 30px;
             margin-top: 0;
-            position: relative;
-            z-index: 1;
         }
 
         .footer-content {
@@ -2435,14 +2413,6 @@
             
             .about-logo {
                 width: 350px;
-            }
-            
-            .page {
-                padding-top: 120px;
-            }
-
-            .page#home {
-                padding-top: 0;
             }
             
             .section-title {
