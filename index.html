@@ -27,10 +27,61 @@
             // Update navigation active state
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => link.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            
+            // If going to booking page, reset to step 1
+            if (pageId === 'booking') {
+                nextStep(1);
+            }
             
             // Scroll to top
             window.scrollTo(0, 0);
+        }
+
+        function resetBooking() {
+            // Reset booking data
+            bookingData = {
+                checkin: '',
+                checkout: '',
+                adults: 2,
+                children: 0,
+                room: '',
+                roomPrice: 0,
+                roomName: '',
+                addons: [],
+                nights: 0,
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: ''
+            };
+            
+            // Clear form inputs
+            document.getElementById('checkin').value = '';
+            document.getElementById('checkout').value = '';
+            document.getElementById('adults').value = '2';
+            document.getElementById('children').value = '0';
+            document.getElementById('firstName').value = '';
+            document.getElementById('lastName').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('requests').value = '';
+            
+            // Clear room selections
+            document.querySelectorAll('.room-option').forEach(room => {
+                room.classList.remove('selected');
+            });
+            
+            // Clear addon selections
+            document.querySelectorAll('.addon-item').forEach(addon => {
+                addon.classList.remove('selected');
+                addon.querySelector('input[type="checkbox"]').checked = false;
+            });
+            
+            // Go back to step 1
+            nextStep(1);
         }
 
         // Booking functions
@@ -302,6 +353,13 @@
         .home-title {
             font-family: 'Edwardian Script ITC', 'Brush Script MT', cursive;
             font-size: 6rem;
+            margin-bottom: 10px;
+        }
+
+        .home-logo {
+            width: 500px;
+            max-width: 90%;
+            height: auto;
             margin-bottom: 10px;
         }
 
@@ -1943,6 +2001,7 @@
                         </div>
 
                         <button class="btn btn-primary" onclick="showPage('home')" style="margin-top: 30px;">Return to Home</button>
+                        <button class="btn btn-secondary" onclick="resetBooking()" style="margin-top: 15px;">Make Another Reservation</button>
                     </div>
                 </div>
             </div>
