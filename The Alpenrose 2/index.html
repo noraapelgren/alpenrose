@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Alpenrose - Mountain Resort & Spa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Didot', 'Bodoni MT', 'Times New Roman', serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(58, 42, 35, 0.95);
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid white;
+        }
+
+        /* Page container */
+        .page {
+            display: none;
+            padding-top: 70px; /* Space for fixed nav */
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Full page image container */
+        .page-image-container {
+            width: 100%;
+            min-height: calc(100vh - 70px);
+            background-size: contain;
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-color: #fff;
+        }
+
+        /* For pages that might be taller than viewport */
+        .scrollable-page {
+            background-size: auto;
+            background-position: top center;
+        }
+
+        /* Specific page backgrounds */
+        #home .page-image-container {
+            background-image: url('images/page-home.png');
+            position: relative; /* Needed for button overlay positioning */
+        }
+
+        #about .page-image-container {
+            background-image: url('images/page-about.png');
+        }
+
+        #spa .page-image-container {
+            background-image: url('images/page-spa.png');
+        }
+
+        #suite .page-image-container {
+            background-image: url('images/page-suite.png');
+        }
+
+        #accommodations .page-image-container {
+            background-image: url('images/page-accommodations.png');
+        }
+
+        #contact .page-image-container {
+            background-image: url('images/page-contact.png');
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .page-image-container {
+                background-size: 100% auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+
+            .page {
+                padding-top: 60px;
+            }
+
+            .page-image-container {
+                min-height: calc(100vh - 60px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                gap: 8px;
+            }
+
+            nav a {
+                font-size: 0.65rem;
+                padding: 5px 8px;
+                letter-spacing: 0.5px;
+            }
+        }
+
+        /* Loading state */
+        .page-image-container::before {
+            content: 'Loading...';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        .page-image-container[style*="background-image"]::before {
+            display: none;
+        }
+
+        /* Clickable button overlay for home page "Learn More" button */
+        .learn-more-overlay {
+            position: absolute;
+            /* Adjust these values to match where your "Learn More" button is positioned */
+            top: 52%; /* Distance from top - adjust based on your design */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px; /* Width of clickable area */
+            height: 50px; /* Height of clickable area */
+            cursor: pointer;
+            z-index: 10;
+            /* Uncomment below to see the clickable area during testing */
+            /* background: rgba(255, 0, 0, 0.3); */
+        }
+
+        .learn-more-overlay:hover {
+            /* Optional: add a subtle effect on hover */
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home" class="nav-link active" onclick="showPage('home', event)">Home</a></li>
+            <li><a href="#about" class="nav-link" onclick="showPage('about', event)">About</a></li>
+            <li><a href="#spa" class="nav-link" onclick="showPage('spa', event)">Spa & Wellness</a></li>
+            <li><a href="#suite" class="nav-link" onclick="showPage('suite', event)">The Grand Penthouse</a></li>
+            <li><a href="#accommodations" class="nav-link" onclick="showPage('accommodations', event)">Accommodations</a></li>
+            <li><a href="#contact" class="nav-link" onclick="showPage('contact', event)">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="page-image-container">
+            <!-- Clickable button overlay for "Learn More" -->
+            <a href="#about" class="learn-more-overlay" onclick="showPage('about', event)"></a>
+        </div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page">
+        <div class="page-image-container"></div>
+    </div>
+
+    <!-- SPA & WELLNESS PAGE -->
+    <div id="spa" class="page">
+        <div class="page-image-container scrollable-page"></div>
+    </div>
+
+    <!-- THE GRAND PENTHOUSE PAGE -->
+    <div id="suite" class="page">
+        <div class="page-image-container scrollable-page"></div>
+    </div>
+
+    <!-- ACCOMMODATIONS PAGE -->
+    <div id="accommodations" class="page">
+        <div class="page-image-container"></div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <div class="page-image-container"></div>
+    </div>
+
+    <script>
+        function showPage(pageId, event) {
+            event.preventDefault();
+            
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation active state
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Prevent default anchor behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('nav a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
