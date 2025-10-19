@@ -1161,10 +1161,15 @@
             document.getElementById('language-dropdown').classList.remove('active');
             
             // Update selected state
-            document.querySelectorAll('#language-dropdown button').forEach(btn => {
+            const buttons = document.querySelectorAll('#language-dropdown button');
+            buttons.forEach(btn => {
                 btn.classList.remove('selected');
+                if (btn.textContent.includes('English') && lang === 'EN') {
+                    btn.classList.add('selected');
+                } else if (btn.textContent.includes('Français') && lang === 'FR') {
+                    btn.classList.add('selected');
+                }
             });
-            event.target.classList.add('selected');
             
             // Translate the page
             translate();
@@ -1178,10 +1183,17 @@
             document.getElementById('currency-dropdown').classList.remove('active');
             
             // Update selected state
-            document.querySelectorAll('#currency-dropdown button').forEach(btn => {
+            const buttons = document.querySelectorAll('#currency-dropdown button');
+            buttons.forEach(btn => {
                 btn.classList.remove('selected');
+                if (btn.textContent.includes('USD') && currency === 'USD') {
+                    btn.classList.add('selected');
+                } else if (btn.textContent.includes('EUR') && currency === 'EUR') {
+                    btn.classList.add('selected');
+                } else if (btn.textContent.includes('CHF') && currency === 'CHF') {
+                    btn.classList.add('selected');
+                }
             });
-            event.target.classList.add('selected');
             
             // Update all prices on the page
             updateAllPrices();
@@ -1199,25 +1211,35 @@
         });
 
         function showPage(pageId) {
-            // Prevent default link behavior
-            if (event) {
-                event.preventDefault();
+            // Stop any event propagation
+            if (window.event) {
+                window.event.preventDefault();
+                window.event.stopPropagation();
             }
             
+            console.log('Navigating to:', pageId);
+            
             const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
+            pages.forEach(page => {
+                page.classList.remove('active');
+                page.style.display = 'none';
+            });
             
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.add('active');
+                targetPage.style.display = 'block';
+                console.log('Page displayed:', pageId);
+            } else {
+                console.error('Page not found:', pageId);
             }
             
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => link.classList.remove('active'));
             
-            // Find the clicked link and make it active
             navLinks.forEach(link => {
-                if (link.getAttribute('href') === '#' + pageId) {
+                const href = link.getAttribute('href');
+                if (href === '#' + pageId) {
                     link.classList.add('active');
                 }
             });
@@ -1229,13 +1251,31 @@
             }
             
             window.scrollTo(0, 0);
+            
+            return false;
         }
 
         // Initialize on page load
         window.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, initializing...');
+            
             // Make sure home page is active on load
-            showPage('home');
+            const homePage = document.getElementById('home');
+            if (homePage) {
+                homePage.classList.add('active');
+                homePage.style.display = 'block';
+            }
+            
+            // Hide all other pages
+            const allPages = document.querySelectorAll('.page:not(#home)');
+            allPages.forEach(page => {
+                page.classList.remove('active');
+                page.style.display = 'none';
+            });
+            
             handleScrollAnimations();
+            
+            console.log('Initialization complete');
         });
 
         function resetBooking() {
@@ -1505,8 +1545,8 @@
             list-style: none;
             display: flex;
             justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
+            gap: 25px;
+            flex-wrap: nowrap;
             padding: 0;
             margin: 0;
         }
@@ -1514,12 +1554,13 @@
         nav a {
             color: white;
             text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
             transition: opacity 0.3s ease;
             text-transform: uppercase;
             font-family: 'Montserrat', sans-serif;
             font-weight: 400;
+            white-space: nowrap;
         }
 
         nav a:hover {
@@ -1608,7 +1649,7 @@
         }
 
         .page.active {
-            display: block;
+            display: block !important;
         }
 
         .page#home {
